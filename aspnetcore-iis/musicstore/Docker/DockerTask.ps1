@@ -46,9 +46,9 @@ $ErrorActionPreference = "Stop"
 function Build(){
 
 	#Publish music store to folder
-	dotnet.exe publish -f netcoreapp1.0 -c $Configuration --output /code/mycode/aspnet-iis/musicstore/publishoutput --no-build --runtime win7-x64
+	dotnet.exe publish -f netcoreapp1.0 -c $Configuration --output /code/mycode/aspnetcore-iis/musicstore/publishoutput --no-build --runtime win7-x64
 	
-	dotnet.exe publish-iis -f netcoreapp1.0 -p /code/mycode/aspnet-iis/musicstore/publishoutput -c $Configuration 
+	dotnet.exe publish-iis -f netcoreapp1.0 -p /code/mycode/aspnetcore-iis/musicstore/publishoutput -c $Configuration 
 	
 	#Build Docker Image
 	docker build --no-cache -t $ImageName`:$Version -f ./Docker/Dockerfile . 

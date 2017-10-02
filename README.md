@@ -1,2 +1,2 @@
-# mycode
-Code Samples for Sharing with Public
+# Just Code
+Code Samples used in my blogs

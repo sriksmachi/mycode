@@ -15,7 +15,7 @@ var triggeractivity = activity as Activity;
  [Serializable]
     public class QueueMessage
     {
-
+	public ResumptionCookie ResumptionCookie;
         public string MessageText;
     }
 #####################################################################################################################################################################

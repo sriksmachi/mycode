@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.Azure;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.FormFlow;
 using Microsoft.Bot.Builder.Luis;
-using Newtonsoft.Json;
 using Microsoft.Bot.Builder.Luis.Models;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Queue;
+using Newtonsoft.Json;
 
-namespace Microsoft.Bot.Sample.PizzaBot
+namespace LuisPizzaBot
 {
     [LuisModel("4311ccf1-5ed1-44fe-9f10-a6adbad05c14", "6d0966209c6e4f6b835ce34492f3e6d9", LuisApiVersion.V2)]
     [Serializable]
@@ -76,6 +78,13 @@ namespace Microsoft.Bot.Sample.PizzaBot
 
             if (order != null)
             {
+                ResumptionCookie resCookie = new ResumptionCookie(context.Activity.AsMessageActivity());
+                var queueMessage = new QueueMessage
+                {
+                    ResumptionCookie = resCookie,
+                    MessageText = "Order Placed"
+                };
+                QueueManager.EnqueueMessage(queueMessage);
                 await context.PostAsync("Your Pizza Order: " + order.ToString());
             }
             else
@@ -85,6 +94,8 @@ namespace Microsoft.Bot.Sample.PizzaBot
 
             context.Wait(MessageReceived);
         }
+
+        
 
         enum Days { Saturday, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday };
 
@@ -132,4 +143,45 @@ namespace Microsoft.Bot.Sample.PizzaBot
             context.Wait(MessageReceived);
         }
     }
+
+    [Serializable]
+    public class QueueMessage
+    {
+        public ResumptionCookie ResumptionCookie;
+        public string MessageText;
+    }
+
+
+    /// <summary>
+    /// Queueu Manager
+    /// </summary>
+    public static class QueueManager
+    {
+        /// <summary>
+        /// Enqueues the message.
+        /// </summary>
+        /// <param name="queueMessage">The queue message.</param>
+        /// <param name="initialVisibilityDelay">The initial visibility delay.</param>
+        public static void EnqueueMessage(QueueMessage queueMessage, int initialVisibilityDelay = 1)
+        {
+            var timeSpan = TimeSpan.FromSeconds(initialVisibilityDelay);
+
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+            // Create the queue client.
+            CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+
+            // Retrieve a reference to a container.
+            CloudQueue queue = queueClient.GetQueueReference("pizzaqueue");
+
+            // Create the queue if it doesn't already exist
+            queue.CreateIfNotExists();
+
+            CloudQueueMessage messageNew = new CloudQueueMessage(JsonConvert.SerializeObject(queueMessage));
+
+            queue.AddMessage(messageNew, initialVisibilityDelay: timeSpan);
+        }
+    }
+    
+
 }

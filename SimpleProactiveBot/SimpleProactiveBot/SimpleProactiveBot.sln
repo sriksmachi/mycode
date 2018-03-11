@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleProactiveBot", "SimpleProactiveBot\SimpleProactiveBot.csproj", "{D1048462-542D-404D-A5D4-0C99E66E3A55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.Sample.PizzaBot", "PizzaBot\Microsoft.Bot.Sample.PizzaBot.csproj", "{E8D5ED12-FA37-4756-9BE2-A459E9F29954}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuisPizzaBot", "LuisPizzaBot\LuisPizzaBot.csproj", "{1F9DE03E-FA70-402E-9A93-6CAA6492D46A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{D1048462-542D-404D-A5D4-0C99E66E3A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1048462-542D-404D-A5D4-0C99E66E3A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1048462-542D-404D-A5D4-0C99E66E3A55}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E8D5ED12-FA37-4756-9BE2-A459E9F29954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E8D5ED12-FA37-4756-9BE2-A459E9F29954}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E8D5ED12-FA37-4756-9BE2-A459E9F29954}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E8D5ED12-FA37-4756-9BE2-A459E9F29954}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F9DE03E-FA70-402E-9A93-6CAA6492D46A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F9DE03E-FA70-402E-9A93-6CAA6492D46A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F9DE03E-FA70-402E-9A93-6CAA6492D46A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F9DE03E-FA70-402E-9A93-6CAA6492D46A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

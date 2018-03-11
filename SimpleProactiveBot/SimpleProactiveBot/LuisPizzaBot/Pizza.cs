@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 #pragma warning disable 649
 
-namespace Microsoft.Bot.Sample.PizzaBot
+namespace LuisPizzaBot
 {
     public enum SizeOptions
     {
@@ -27,7 +27,7 @@ namespace Microsoft.Bot.Sample.PizzaBot
     };
     public enum SignatureOptions { Hawaiian = 1, Pepperoni, MurphysCombo, ChickenGarlic, TheCowboy };
     public enum GourmetDeliteOptions { SpicyFennelSausage = 1, AngusSteakAndRoastedGarlic, GourmetVegetarian, ChickenBaconArtichoke, HerbChickenMediterranean };
-    public enum StuffedOptions { ChickenBaconStuffed = 1, ChicagoStyleStuffed, FiveMeatStuffed };
+    public enum StuffedOptions { ChickenBaconStuffed = 1, ChicagoStyleStuffed, FiveMeatStuffed, ExoticVeg, FarmHouse };
 
     // Fresh Pan is large pizza only
     public enum CrustOptions

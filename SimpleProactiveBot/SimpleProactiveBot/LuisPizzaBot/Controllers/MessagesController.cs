@@ -1,14 +1,17 @@
-﻿using System.Web.Http;
-using System.Threading.Tasks;
-
-using Microsoft.Bot.Connector;
-using Microsoft.Bot.Builder.FormFlow;
-using Microsoft.Bot.Builder.Dialogs;
-using System.Web.Http.Description;
-using System.Net.Http;
+﻿using System;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Description;
+using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.FormFlow;
+using Microsoft.Bot.Connector;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Bot.Sample.PizzaBot
+namespace LuisPizzaBot
 {
     [BotAuthentication]
     public class MessagesController : ApiController
@@ -62,7 +65,45 @@ namespace Microsoft.Bot.Sample.PizzaBot
                     case ActivityTypes.Message:
                         await Conversation.SendAsync(activity, MakeRoot);
                         break;
+                    case ActivityTypes.Trigger:
+                        var triggeractivity = activity as Activity;
+                        var message = JsonConvert.DeserializeObject<QueueMessage>(((JObject)triggeractivity.Value).GetValue("Message").ToString());
 
+
+                        // send notification
+                        var messageactivity = (Activity)message.ResumptionCookie.GetMessage();
+                        var client = new ConnectorClient(new Uri(messageactivity.ServiceUrl));
+                        Activity replyToConversation = messageactivity.CreateReply();
+                        replyToConversation.Recipient = activity.From;
+                        replyToConversation.Text = "Notification: " + message.MessageText;
+                        await client.Conversations.ReplyToActivityAsync(replyToConversation);
+
+                        // set the next status
+                        var queueMessage = new QueueMessage
+                        {
+                            ResumptionCookie = message.ResumptionCookie
+                        };
+
+                        switch (message.MessageText)
+                        {
+                            case "Order Placed":
+                                queueMessage.MessageText = "Order Prepared";
+                                QueueManager.EnqueueMessage(queueMessage, 5);
+                                break;
+                            case "Order Prepared":
+                                queueMessage.MessageText = "Order Baked";
+                                QueueManager.EnqueueMessage(queueMessage, 10);
+                                break;
+                            case "Order Baked":
+                                queueMessage.MessageText = "Order Boxed";
+                                QueueManager.EnqueueMessage(queueMessage, 15);
+                                break;
+                            case "Order Boxed":
+                                queueMessage.MessageText = "Order Delivered, Enjoy your favorite Pizza !! See you again";
+                                QueueManager.EnqueueMessage(queueMessage, 5);
+                                break;
+                        }
+                        break;
                     case ActivityTypes.ConversationUpdate:
                     case ActivityTypes.ContactRelationUpdate:
                     case ActivityTypes.Typing:

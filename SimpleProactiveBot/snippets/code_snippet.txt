@@ -1,0 +1,69 @@
+#####################################################################################################################################################################
+var triggeractivity = activity as Activity;
+                var message = JsonConvert.DeserializeObject<QueueMessage>(((JObject)triggeractivity.Value).GetValue("Message").ToString());
+                if (!string.IsNullOrEmpty(message.MessageText))
+                {
+                    var messageactivity = (Activity)message.ResumptionCookie.GetMessage();
+                    var client = new ConnectorClient(new Uri(messageactivity.ServiceUrl));
+                    Activity replyToConversation = messageactivity.CreateReply();
+                    replyToConversation.Recipient = activity.From;
+                    replyToConversation.Type = "message";
+                    replyToConversation.Text = "This is a notification : " + message.MessageText;
+                    await client.Conversations.ReplyToActivityAsync(replyToConversation);
+                }
+#####################################################################################################################################################################
+ [Serializable]
+    public class QueueMessage
+    {
+
+        public string MessageText;
+    }
+#####################################################################################################################################################################
+
+ ResumptionCookie resCookie = new ResumptionCookie(activity);
+            queueMessage = new QueueMessage
+            {
+                ResumptionCookie = resCookie,
+                MessageText = activity.Text ?? string.Empty
+            };
+
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+            // Create the queue client.
+            CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+
+            // Retrieve a reference to a container.
+            CloudQueue queue = queueClient.GetQueueReference("botqueue");
+
+            // Create the queue if it doesn't already exist
+            queue.CreateIfNotExists();
+
+            CloudQueueMessage messageNew = new CloudQueueMessage(JsonConvert.SerializeObject(queueMessage));
+            queue.AddMessage(messageNew);
+
+#####################################################################################################################################################################
+
+
+using System;
+using System.Net;
+using System.Net.Http;
+using Microsoft.Azure.WebJobs.Host;
+
+public class BotMessage
+{    
+    public string Message { get; set; }
+}
+
+public static BotMessage Run(string myQueueItem, out BotMessage message, TraceWriter log)
+{
+    log.Info($"C# Queue trigger function process started: {myQueueItem}");
+    message = new BotMessage
+    { 
+        Message = myQueueItem
+    };
+    log.Info($"C# Queue trigger function process Complete: {myQueueItem}");
+    return message;    
+}
+
+
+AzureWebJobsBotFrameworkDirectLineSecret	

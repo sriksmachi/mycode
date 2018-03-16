@@ -21,7 +21,7 @@ var triggeractivity = activity as Activity;
 #####################################################################################################################################################################
 
  ResumptionCookie resCookie = new ResumptionCookie(activity);
-            queueMessage = new QueueMessage
+            var queueMessage = new QueueMessage
             {
                 ResumptionCookie = resCookie,
                 MessageText = activity.Text ?? string.Empty
@@ -67,3 +67,5 @@ public static BotMessage Run(string myQueueItem, out BotMessage message, TraceWr
 
 
 AzureWebJobsBotFrameworkDirectLineSecret	
+
+ngrok.exe http 3979 -host-header="localhost:3979"

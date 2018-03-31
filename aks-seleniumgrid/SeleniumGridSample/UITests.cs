@@ -25,10 +25,10 @@ namespace SeleniumGridSample
         /// </summary>
         public UITests()
         {
-            driver = new ChromeDriver(@"C:\Users\vism\Downloads\chromedriver_win32\");
-// ChromeOptions chromeOptions = new ChromeOptions();
-// chromeOptions.AddArgument("--start-maximized");
-// driver = new RemoteWebDriver(new Uri("http://52.165.22.80:4444/wd/hub"), chromeOptions.ToCapabilities());
+            //driver = new ChromeDriver(@"C:\Users\vism\Downloads\chromedriver_win32\");
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.AddArgument("--start-maximized");
+            driver = new RemoteWebDriver(new Uri("http://52.176.146.195:4444/wd/hub"), chromeOptions.ToCapabilities());
         }
 
         /// <summary>

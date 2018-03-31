@@ -4,8 +4,8 @@ az aks get-credentials -g sg-rg-eu -n selenium-grid
 az aks browse -g sg-rg-eu -n selenium-grid
 az aks delete-g sg-rg-eu -n selenium-grid
 
-kubectl run selenium-grid --image selenium/hub:3.3.0 --port 4444
-kubectl expose deployment selenium-grid --type=LoadBalancer --name=selenium-hub
+kubectl run seleniumgrid --image selenium/hub:3.3.0 --port 4444
+kubectl expose deployment seleniumgrid --type=LoadBalancer --name=selenium-hub
 kubectl get service selenium-hub --watch
 kubectl run selenium-node-chrome --image selenium/node-chrome:3.3.1 --env="HUB_PORT_4444_TCP_ADDR=selenium-hub" --env="HUB_PORT_4444_TCP_PORT=4444"
 kubectl scale deployment selenium-node-chrome --replicas=10

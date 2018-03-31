@@ -2,7 +2,7 @@
 <RunSettings>
   <!-- Configurations that affect the Test Framework -->
  <RunConfiguration>
-    <DisableParallelization>true</DisableParallelization>
+    <DisableParallelization>false</DisableParallelization>
     <MaxCpuCount>10</MaxCpuCount>
   </RunConfiguration>
   <!-- MSTest adapter -->

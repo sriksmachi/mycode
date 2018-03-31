@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { Product } from '../models/products';
 import { ProductService } from '../core/services/product.service';
-import { ThingService } from '../core/services/thing-data.service';
 
 @Component({
     templateUrl: './product-list.component.html'

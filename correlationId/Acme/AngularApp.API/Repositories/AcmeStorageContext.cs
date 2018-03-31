@@ -9,6 +9,7 @@ using System.Data;
 using AngularApp.API.Interfaces;
 using System.IO;
 using Newtonsoft.Json;
+using StackExchange.Redis;
 
 namespace AngularApp.API.Repositories
 {
@@ -37,7 +38,7 @@ namespace AngularApp.API.Repositories
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        internal int EnsureSeedData()
+        internal int EnsureSeedData(string redisConnectionString)
         {
             var location = System.Reflection.Assembly.GetEntryAssembly().Location;
             var directory = System.IO.Path.GetDirectoryName(location);
@@ -56,6 +57,10 @@ namespace AngularApp.API.Repositories
                 this.SaveChanges();
             }
 
+            // Seeding Redis
+            ConnectionMultiplexer connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
+            var database = connectionMultiplexer.GetDatabase();
+            database.StringSet("top5products", JsonConvert.SerializeObject(this.Product.OrderByDescending(p=>p.StarRating).Take(5).ToList()));
             return 0;
         }
 

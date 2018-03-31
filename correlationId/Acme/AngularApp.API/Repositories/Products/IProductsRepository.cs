@@ -50,5 +50,18 @@ namespace AngularApp.API.Repositories
         /// </summary>
         /// <returns>no. of products</returns>
         int Count();
+
+        /// <summary>
+        /// Searches the specified search term.
+        /// </summary>
+        /// <param name="searchTerm">The search term.</param>
+        /// <returns></returns>
+        IList<Product> Search(string searchTerm);
+
+        /// <summary>
+        /// Gets the top5.
+        /// </summary>
+        /// <returns></returns>
+        IList<Product> GetTop5();
     }
 }

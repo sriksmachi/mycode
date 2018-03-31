@@ -8,51 +8,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { ThingService } from './../../core/services/thing-data.service';
-import { Thing } from './../../models/thing';
+import { ProductService } from './../../core/services/product.service';
+import { Http } from '@angular/http';
 var HomeComponent = (function () {
-    function HomeComponent(dataService) {
+    function HomeComponent(dataService, http) {
         this.dataService = dataService;
-        this.things = [];
-        this.thing = new Thing();
-        this.message = '{{Angular 4 Workshop}}';
+        this.http = http;
+        this.message = 'Correlating events across MicroServices';
     }
     HomeComponent.prototype.ngOnInit = function () {
-        this.getAllThings();
     };
-    HomeComponent.prototype.addThing = function () {
-        var _this = this;
-        this.dataService
-            .add(this.thing)
-            .subscribe(function () {
-            _this.getAllThings();
-            _this.thing = new Thing();
-        }, function (error) {
-            console.log(error);
-        });
-    };
-    HomeComponent.prototype.deleteThing = function (thing) {
-        var _this = this;
-        this.dataService
-            .delete(thing.id)
-            .subscribe(function () {
-            _this.getAllThings();
-        }, function (error) {
-            console.log(error);
-        });
-    };
-    HomeComponent.prototype.getAllThings = function () {
-        var _this = this;
-        this.dataService
-            .getAll()
-            .subscribe(function (data) { return _this.things = data; }, function (error) { return console.log(error); }, function () { return console.log('Get all complete'); });
+    HomeComponent.prototype.search = function () {
+        console.log("Search String: " + this.searchString);
     };
     HomeComponent = __decorate([
         Component({
             selector: 'app-home-component',
             templateUrl: './home.component.html'
         }),
-        __metadata("design:paramtypes", [ThingService])
+        __metadata("design:paramtypes", [ProductService, Http])
     ], HomeComponent);
     return HomeComponent;
 }());

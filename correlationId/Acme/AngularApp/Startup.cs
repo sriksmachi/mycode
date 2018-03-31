@@ -6,9 +6,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using AngularApp.Repositories.Things;
-using AngularApp.Repositories.Products;
-using AngularApp.Models;
 
 namespace AngularApp
 {
@@ -40,10 +37,6 @@ namespace AngularApp
                             .AllowAnyMethod();
                     });
             });
-
-            // Add framework services.
-            services.AddSingleton<IThingsRepository, ThingsRepository>();
-            services.AddSingleton<IProductsRepository, ProductsRepository>();
             services.AddMvc();
         }
 

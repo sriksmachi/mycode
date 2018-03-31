@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { Configuration } from '../app.constants';
-import { ThingService } from './services/thing-data.service';
 var CoreModule = (function () {
     function CoreModule() {
     }
@@ -16,7 +15,6 @@ var CoreModule = (function () {
         return {
             ngModule: CoreModule_1,
             providers: [
-                ThingService,
                 Configuration
             ]
         };

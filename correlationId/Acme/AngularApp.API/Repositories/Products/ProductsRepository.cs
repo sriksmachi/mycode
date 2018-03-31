@@ -7,6 +7,10 @@ using Microsoft.ApplicationInsights.Extensibility.Implementation;
 using System.IO;
 using Newtonsoft.Json;
 using AngularApp.API.Interfaces;
+using StackExchange.Redis;
+using Microsoft.Azure.Search;
+using Microsoft.Azure.Search.Models;
+using Microsoft.Extensions.Options;
 
 /// <summary>
 /// Products Repository
@@ -22,13 +26,59 @@ namespace AngularApp.API.Repositories
         /// The local storage object
         /// </summary>
         private readonly AcmeStorageContext _storage;
+        private readonly string redisConnectionString;
+        private readonly string searchServiceName;
+        private readonly string searchApikey;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductsRepository"/> class.
         /// </summary>
-        public ProductsRepository(IDbConnectionFactory dbConnectionFactory)
+        public ProductsRepository(IDbConnectionFactory dbConnectionFactory, IOptions<AppSettings> options)
         {
             _storage = new AcmeStorageContext(dbConnectionFactory);
+            redisConnectionString = options.Value.RedisConnectionString;
+            searchServiceName = options.Value.SearchServiceName;
+            searchApikey = options.Value.SearchAPIKey;
+        }
+
+        /// <summary>
+        /// Gets the top5.
+        /// </summary>
+        /// <returns></returns>
+        public IList<Product> GetTop5()
+        {
+            ConnectionMultiplexer connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
+            var database = connectionMultiplexer.GetDatabase();
+            var products = JsonConvert.DeserializeObject<List<Product>>(database.StringGet("top5products"));
+            return products;
+        }
+
+        /// <summary>
+        /// Searches the specified search term.
+        /// </summary>
+        /// <param name="searchTerm">The search term.</param>
+        /// <returns></returns>
+        public IList<Product> Search(string searchTerm)
+        {
+            var searchClient = new SearchServiceClient(this.searchServiceName, new SearchCredentials(this.searchApikey));
+            var indexClient = searchClient.Indexes.GetClient("azuresql-index");
+            SearchParameters sp = new SearchParameters() { SearchMode = SearchMode.All };
+            var results = indexClient.Documents.Search(searchTerm, sp);
+            IList<Product> searchedList = new List<Product>();
+            foreach (var result in results.Results)
+            {
+                var product = new Product();
+                product.ProductId = int.Parse(result.Document["ProductId"].ToString());
+                product.ProductName = result.Document["ProductName"].ToString();
+                product.ProductCode = result.Document["ProductCode"].ToString();
+                product.Price = decimal.Parse(result.Document["Price"].ToString());
+                product.ReleaseDate = result.Document["ReleaseDate"].ToString();
+                product.Description = result.Document["Description"].ToString();
+                product.StarRating = double.Parse(result.Document["StarRating"].ToString());
+                product.ImageUrl = result.Document["ImageUrl"].ToString();
+                searchedList.Add(product);
+            }
+            return searchedList;
         }
 
         /// <summary>

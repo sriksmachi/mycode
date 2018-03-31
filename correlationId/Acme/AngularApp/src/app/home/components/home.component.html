@@ -1,16 +1,15 @@
 ﻿<div class="container-fluid">
     <div class="row">
-        <h1>{{message}}</h1>
-        <form class="form-inline" (ngSubmit)="addThing()" #thingForm="ngForm">
+        <h3>{{message}}</h3>
+        <form class="form-inline" (ngSubmit)="search()" #searchForm="ngForm">
             <div class="form-group">
-                <label class="sr-only" for="exampleInputThing">Item</label>
-                <input type="text" class="form-control" id="exampleInputThing" placeholder="Name of an item ..." name="thing" [(ngModel)]="thing.name"
-                       required>
+                <label class="sr-only" for="exampleInputThing">Search</label>
+                <input type="text" class="form-control" id="exampleInputThing" placeholder="Search..." name="search" required>
             </div>
-            <button type="submit" class="btn btn-primary" [disabled]="!thingForm.valid">Create an item</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!searchForm.valid">Search</button>
         </form>
     </div>
-    <div class="row" *ngIf="things.length > 0">
+    <div class="row" *ngIf="false">
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -20,19 +19,8 @@
                         <th class="text-right"></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr *ngFor="let thing of things; let i = index">
-                        <td>{{i + 1}}</td>
-                        <td>{{thing.name}}</td>
-                        <td class="text-right">
-                            <button type="button" class="btn btn-xs btn-danger" (click)="deleteThing(thing)">Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
-    </div>
-    <div class="row" *ngIf="things.length <= 0">
-        <span>No items found</span>
     </div>
 </div>

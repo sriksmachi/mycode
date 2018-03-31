@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
-import { ThingService } from './../../core/services/thing-data.service';
-import { Thing } from './../../models/thing';
+import { ProductService } from './../../core/services/product.service';
+import { Product } from './../../models/products';
+import { Http } from '@angular/http';
 
 @Component({
     selector: 'app-home-component',
@@ -11,45 +11,17 @@ import { Thing } from './../../models/thing';
 export class HomeComponent implements OnInit { // home component
 
     public message: string;
-    public things: Thing[] = [];
-    public thing: Thing = new Thing();
+    public searchString: string;
+    url: string;
 
-    constructor(private dataService: ThingService) {
-        this.message = '{{Angular 4 Workshop}}';
+    constructor(private dataService: ProductService, private http: Http) {
+        this.message = 'Correlating events across MicroServices';
     }
 
     ngOnInit() { // home component on initialize object.
-        this.getAllThings();
     }
 
-    public addThing() {
-        this.dataService
-            .add(this.thing)
-            .subscribe(() => {
-                this.getAllThings();
-                this.thing = new Thing();
-            }, (error) => {
-                console.log(error);
-            });
-    }
-
-    public deleteThing(thing: Thing) {
-        this.dataService
-            .delete(thing.id)
-            .subscribe(() => {
-                this.getAllThings();
-            }, (error) => {
-                console.log(error);
-            });
-    }
-
-    private getAllThings() {
-        this.dataService
-            .getAll()
-            .subscribe(
-            data => this.things = data,
-            error => console.log(error),
-            () => console.log('Get all complete')
-            );
+    search() {
+        console.log("Search String: "+ this.searchString);
     }
 }

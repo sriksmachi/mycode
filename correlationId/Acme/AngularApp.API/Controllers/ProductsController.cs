@@ -39,6 +39,31 @@ namespace AngularApp.API.Controller
             return Ok(_productsRepository.GetAll());
         }
 
+
+        /// <summary>
+        /// Gets this instance.
+        /// </summary>
+        /// <returns>
+        /// List of all products
+        /// </returns>
+        [HttpGet("search/{searchTerm}")]
+        public IActionResult Search(string searchTerm)
+        {
+            return Ok(_productsRepository.Search(searchTerm));
+        }
+
+        /// <summary>
+        /// Gets this instance.
+        /// </summary>
+        /// <returns>
+        /// List of all products
+        /// </returns>
+        [HttpGet("top5")]
+        public IActionResult Top5()
+        {
+            return Ok(_productsRepository.GetTop5());
+        }
+
         /// <summary>
         /// Adds the specified product.
         /// </summary>

@@ -57,6 +57,7 @@ namespace AngularApp.API
             services.AddMvc();
             services.AddCors();
             services.Configure<DbConnectionFactoryOptions>(this.Configuration);
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             
             var builder = new ContainerBuilder();
             // register the autoFacModules found in loaded runtime assemblies
@@ -73,7 +74,7 @@ namespace AngularApp.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.EnsureDatabaseIsSeeded();
+                app.EnsureDatabaseIsSeeded(app.ApplicationServices.GetService<IOptions<AppSettings>>());
             }
             app.UseCors(builder =>
                             builder.WithOrigins("http://localhost:5000"));

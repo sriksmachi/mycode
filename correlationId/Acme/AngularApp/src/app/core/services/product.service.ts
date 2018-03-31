@@ -13,10 +13,14 @@ import { Product } from '../../models/products';
 @Injectable()
 export class ProductService {
     private _productUrl: string;
+    private _searchUrl: string;
+    private _top5: string;
     private headers: HttpHeaders;
 
     constructor(private http: HttpClient, private configuration: Configuration) { // Products Service constructor to initialize objects.
         this._productUrl = configuration.Server + 'api/products/'
+        this._searchUrl = configuration.Server + 'api/products/search/'
+        this._top5 = configuration.Server + 'api/products/top5'
 
         this.headers = new HttpHeaders();
         this.headers = this.headers.set('Content-Type', 'application/json');
@@ -25,6 +29,18 @@ export class ProductService {
 
     getProducts(): Observable<Product[]> { // get list of products
         return this.http.get<Product[]>(this._productUrl)
+            .do(data => console.log('All: ' + JSON.stringify(data)))
+            .catch(this.handleError);
+    }
+
+    search(searchTerm: string): Observable<Product[]> { // search list of products
+        return this.http.get<Product[]>(this._searchUrl + searchTerm)
+            .do(data => console.log('All: ' + JSON.stringify(data)))
+            .catch(this.handleError);
+    }
+
+    getTop5(): Observable<Product[]> { // get top 5 products
+        return this.http.get<Product[]>(this._top5)
             .do(data => console.log('All: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }

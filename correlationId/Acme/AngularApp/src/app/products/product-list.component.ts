@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Product } from '../models/products';
 import { ProductService } from '../core/services/product.service';
 
 @Component({
     templateUrl: './product-list.component.html'
 })
+
 export class ProductListComponent implements OnInit {
     pageTitle: string = 'Product List';
     imageWidth: number = 50;

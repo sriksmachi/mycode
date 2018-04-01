@@ -77,7 +77,7 @@ namespace AngularApp.API
                 app.EnsureDatabaseIsSeeded(app.ApplicationServices.GetService<IOptions<AppSettings>>());
             }
             app.UseCors(builder =>
-                            builder.WithOrigins("http://localhost:5000"));
+                            builder.WithOrigins("http://localhost:5000", "https://dc.services.visualstudio.com"));
             app.UseMvc();
         }
     }

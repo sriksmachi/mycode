@@ -8,6 +8,7 @@
       "root": "src",
       "outDir": "wwwroot",
       "assets": [
+        "lib",
         "favicon.ico"
       ],
       "index": "index.html",
@@ -20,7 +21,8 @@
         "styles.css",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css"
       ],
-      "scripts": [],
+      "scripts": [
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

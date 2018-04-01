@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 var Configuration = (function () {
     function Configuration() {
         this.Server = 'http://localhost:19714/';
+        this.appInsightsInstrumentationKey = '16630ce9-09c8-4cac-b2e0-b4fcbea412b4';
     }
     Configuration = __decorate([
         Injectable()

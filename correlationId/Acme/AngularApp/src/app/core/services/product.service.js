@@ -20,12 +20,24 @@ var ProductService = (function () {
         this.http = http;
         this.configuration = configuration;
         this._productUrl = configuration.Server + 'api/products/';
+        this._searchUrl = configuration.Server + 'api/products/search/';
+        this._top5 = configuration.Server + 'api/products/top5';
         this.headers = new HttpHeaders();
         this.headers = this.headers.set('Content-Type', 'application/json');
         this.headers = this.headers.set('Accept', 'application/json');
     }
     ProductService.prototype.getProducts = function () {
         return this.http.get(this._productUrl)
+            .do(function (data) { return console.log('All: ' + JSON.stringify(data)); })
+            .catch(this.handleError);
+    };
+    ProductService.prototype.search = function (searchTerm) {
+        return this.http.get(this._searchUrl + searchTerm)
+            .do(function (data) { return console.log('All: ' + JSON.stringify(data)); })
+            .catch(this.handleError);
+    };
+    ProductService.prototype.getTop5 = function () {
+        return this.http.get(this._top5)
             .do(function (data) { return console.log('All: ' + JSON.stringify(data)); })
             .catch(this.handleError);
     };

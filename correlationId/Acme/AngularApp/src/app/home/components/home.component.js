@@ -14,12 +14,30 @@ var HomeComponent = (function () {
     function HomeComponent(dataService, http) {
         this.dataService = dataService;
         this.http = http;
-        this.message = 'Correlating events across MicroServices';
+        this.products = [];
+        this.top5products = [];
     }
     HomeComponent.prototype.ngOnInit = function () {
+        this.getTop5();
     };
     HomeComponent.prototype.search = function () {
+        var _this = this;
+        this.dataService.search(this.searchString)
+            .subscribe(function (products) {
+            _this.products = products;
+        }, function (error) { return _this.errorMessage = error; });
         console.log("Search String: " + this.searchString);
+    };
+    HomeComponent.prototype.getTop5 = function () {
+        var _this = this;
+        this.dataService.getTop5()
+            .subscribe(function (products) {
+            _this.top5products = products;
+        }, function (error) { return _this.errorMessage = error; });
+        console.log("Search String: " + this.searchString);
+    };
+    HomeComponent.prototype.onRatingClicked = function (message) {
+        console.log('Rating Clicked: ' + message);
     };
     HomeComponent = __decorate([
         Component({

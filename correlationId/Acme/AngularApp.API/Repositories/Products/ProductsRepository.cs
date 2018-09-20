@@ -25,7 +25,7 @@ namespace AngularApp.API.Repositories
         /// <summary>
         /// The local storage object
         /// </summary>
-        private readonly AcmeStorageContext _storage;
+        private readonly AcmeContext _storage;
         private readonly string redisConnectionString;
         private readonly string searchServiceName;
         private readonly string searchApikey;
@@ -35,7 +35,7 @@ namespace AngularApp.API.Repositories
         /// </summary>
         public ProductsRepository(IDbConnectionFactory dbConnectionFactory, IOptions<AppSettings> options)
         {
-            _storage = new AcmeStorageContext(dbConnectionFactory);
+            _storage = new AcmeContext(dbConnectionFactory);
             redisConnectionString = options.Value.RedisConnectionString;
             searchServiceName = options.Value.SearchServiceName;
             searchApikey = options.Value.SearchAPIKey;

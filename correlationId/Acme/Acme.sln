@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularApp.API", "AngularApp.API\AngularApp.API.csproj", "{575DBC8D-5297-4EA3-B917-69A4FFD0162D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AngularApp.API", "AngularApp.API\AngularApp.API.csproj", "{575DBC8D-5297-4EA3-B917-69A4FFD0162D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AngularApp", "AngularApp\AngularApp.csproj", "{A89ECA0A-E60A-4D8F-B563-3A52BA4103EF}"
-EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "AngularApp.Database", "AngularApp.Database\AngularApp.Database.sqlproj", "{4F4F4AC4-DF99-47E6-8E25-7384014987A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +21,6 @@ Global
 		{A89ECA0A-E60A-4D8F-B563-3A52BA4103EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A89ECA0A-E60A-4D8F-B563-3A52BA4103EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A89ECA0A-E60A-4D8F-B563-3A52BA4103EF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F4F4AC4-DF99-47E6-8E25-7384014987A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F4F4AC4-DF99-47E6-8E25-7384014987A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F4F4AC4-DF99-47E6-8E25-7384014987A7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{4F4F4AC4-DF99-47E6-8E25-7384014987A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F4F4AC4-DF99-47E6-8E25-7384014987A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F4F4AC4-DF99-47E6-8E25-7384014987A7}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

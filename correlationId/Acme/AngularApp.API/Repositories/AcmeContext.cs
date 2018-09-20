@@ -17,7 +17,7 @@ namespace AngularApp.API.Repositories
     /// 
     /// </summary>
     /// <seealso cref="System.Data.Entity.DbContext" />
-    public class AcmeStorageContext : DbContext
+    public class AcmeContext : DbContext
     {
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace AngularApp.API.Repositories
 
             if (this.Product.Count() == 0)
             {
-                this.Product.UpdateRange(products);
+                this.Product.AddRange(products);
                 this.SaveChanges();
             }
 
@@ -65,10 +65,10 @@ namespace AngularApp.API.Repositories
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AcmeStorageContext"/> class.
+        /// Initializes a new instance of the <see cref="AcmeContext"/> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        public AcmeStorageContext(IDbConnectionFactory dbConnection)
+        public AcmeContext(IDbConnectionFactory dbConnection)
         {
             this.connection = dbConnection.Connection;
         }

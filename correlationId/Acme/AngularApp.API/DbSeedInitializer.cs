@@ -19,7 +19,8 @@ namespace AngularApp.API
         public static int EnsureDatabaseIsSeeded(this IApplicationBuilder builder, IOptions<AppSettings> options)
         {
             IDbConnectionFactory connectionFactory = builder.ApplicationServices.GetService(typeof(IDbConnectionFactory)) as IDbConnectionFactory;
-            var context = new AcmeStorageContext(connectionFactory);
+            var context = new Repositories.AcmeContext(connectionFactory);
+            context.Database.EnsureCreated();
             return context.EnsureSeedData(options.Value.RedisConnectionString);
         }
     }

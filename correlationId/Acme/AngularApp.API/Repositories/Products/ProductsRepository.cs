@@ -60,25 +60,7 @@ namespace AngularApp.API.Repositories
         /// <returns></returns>
         public IList<Product> Search(string searchTerm)
         {
-            var searchClient = new SearchServiceClient(this.searchServiceName, new SearchCredentials(this.searchApikey));
-            var indexClient = searchClient.Indexes.GetClient("azuresql-index");
-            SearchParameters sp = new SearchParameters() { SearchMode = SearchMode.All };
-            var results = indexClient.Documents.Search(searchTerm, sp);
-            IList<Product> searchedList = new List<Product>();
-            foreach (var result in results.Results)
-            {
-                var product = new Product();
-                product.ProductId = int.Parse(result.Document["ProductId"].ToString());
-                product.ProductName = result.Document["ProductName"].ToString();
-                product.ProductCode = result.Document["ProductCode"].ToString();
-                product.Price = decimal.Parse(result.Document["Price"].ToString());
-                product.ReleaseDate = result.Document["ReleaseDate"].ToString();
-                product.Description = result.Document["Description"].ToString();
-                product.StarRating = double.Parse(result.Document["StarRating"].ToString());
-                product.ImageUrl = result.Document["ImageUrl"].ToString();
-                searchedList.Add(product);
-            }
-            return searchedList;
+            return _storage.Product.Where(p => p.ProductName.Contains(searchTerm)).ToList();
         }
 
         /// <summary>

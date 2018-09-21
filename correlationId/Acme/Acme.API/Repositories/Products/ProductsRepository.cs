@@ -2,19 +2,20 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using Acme.API.Models;
+using AngularApp.API.Models;
 using Microsoft.ApplicationInsights.Extensibility.Implementation;
 using System.IO;
 using Newtonsoft.Json;
-using Acme.API.Interfaces;
+using AngularApp.API.Interfaces;
 using StackExchange.Redis;
+using Microsoft.Azure.Search;
+using Microsoft.Azure.Search.Models;
 using Microsoft.Extensions.Options;
-using System.Threading;
 
 /// <summary>
 /// Products Repository
 /// </summary>
-namespace Acme.API.Repositories
+namespace AngularApp.API.Repositories
 {
     /// <summary>
     /// Products Repository Class.
@@ -24,19 +25,20 @@ namespace Acme.API.Repositories
         /// <summary>
         /// The local storage object
         /// </summary>
-        private readonly AcmeStorageContext _storage;
+        private readonly AcmeContext _storage;
         private readonly string redisConnectionString;
-        private readonly IDatabase redisDatabase;
+        private readonly string searchServiceName;
+        private readonly string searchApikey;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductsRepository"/> class.
         /// </summary>
         public ProductsRepository(IDbConnectionFactory dbConnectionFactory, IOptions<AppSettings> options)
         {
-            _storage = new AcmeStorageContext(dbConnectionFactory);
+            _storage = new AcmeContext(dbConnectionFactory);
             redisConnectionString = options.Value.RedisConnectionString;
-            ConnectionMultiplexer connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
-            redisDatabase = connectionMultiplexer.GetDatabase();
+            searchServiceName = options.Value.SearchServiceName;
+            searchApikey = options.Value.SearchAPIKey;
         }
 
         /// <summary>
@@ -45,7 +47,9 @@ namespace Acme.API.Repositories
         /// <returns></returns>
         public IList<Product> GetTop5()
         {
-            var products = JsonConvert.DeserializeObject<List<Product>>(redisDatabase.StringGet("top5products"));
+            ConnectionMultiplexer connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
+            var database = connectionMultiplexer.GetDatabase();
+            var products = JsonConvert.DeserializeObject<List<Product>>(database.StringGet("top5products"));
             return products;
         }
 
@@ -56,7 +60,7 @@ namespace Acme.API.Repositories
         /// <returns></returns>
         public IList<Product> Search(string searchTerm)
         {
-            return _storage.Product.Where(p => p.ProductName.ToLowerInvariant().Contains(searchTerm.ToLowerInvariant())).ToList();
+            return _storage.Product.Where(p => p.ProductName.Contains(searchTerm)).ToList();
         }
 
         /// <summary>

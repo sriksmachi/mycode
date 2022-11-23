@@ -28,7 +28,7 @@ namespace SeleniumGridSample
             //driver = new ChromeDriver(@"C:\Users\vism\Downloads\chromedriver_win32\");
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.AddArgument("--start-maximized");
-            driver = new RemoteWebDriver(new Uri("http://52.176.146.195:4444/wd/hub"), chromeOptions.ToCapabilities());
+            driver = new RemoteWebDriver(new Uri("http://168.62.219.221:4444/wd/hub"), chromeOptions.ToCapabilities());
         }
 
         /// <summary>

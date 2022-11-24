@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeleniumGridSample", "SeleniumGridSample\SeleniumGridSample.csproj", "{7644220B-1765-47F4-A571-DF8FFF766618}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeleniumSample_NUNIT", "SeleniumSample\SeleniumSample_NUNIT.csproj", "{F26AB48C-A4D7-492D-9A9B-91BE8309F5FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7644220B-1765-47F4-A571-DF8FFF766618}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7644220B-1765-47F4-A571-DF8FFF766618}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7644220B-1765-47F4-A571-DF8FFF766618}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F26AB48C-A4D7-492D-9A9B-91BE8309F5FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F26AB48C-A4D7-492D-9A9B-91BE8309F5FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F26AB48C-A4D7-492D-9A9B-91BE8309F5FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F26AB48C-A4D7-492D-9A9B-91BE8309F5FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
